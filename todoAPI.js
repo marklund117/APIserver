@@ -11,19 +11,22 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 // data stuff - temporary hardcoded to-do list
 let todoList = [
-    {
+    {   
+        index: 0,
         isComplete: false,
         todoText: 'Item One',
         editMode: false,
         category: ''
     },
-    {
+    {   
+        index: 1,
         isComplete: false,
         todoText: 'Item Two',
         editMode: false,
         category: ''
     },
-    {
+    {   
+        index: 2,
         isComplete: false,
         todoText: 'Item Three',
         editMode: false,
@@ -61,20 +64,24 @@ app.post('/api/postTodo', (req, res) => {
     todoList.push(
         {
             // object structure should match the app
+            index: todoList.length, // 
             isComplete: false, // false bool to start
-            todoText: req.body.todo, // from the request (NOT WORKING)
+            todoText: req.body.todo, // from the request
             editMode: false,
             category: '' // new prop for categories
         }
     )
+    console.log(req.body.todo)
     res.send(todoList)
 })
 
 
-// 3 PUT a todo (update) (what? what is a put request?)
+// 3 PUT a todo (update)
 app.put('/api/putTodo', (req, res) => {
-    let toBeEdited = todoList.find((Element) => Element.todoText = req.body.todo)
-    // now what?
+    todoList[req.body.index].todoText = req.body.todo
+    // then edit the item
+    console.log(toBeEdited)
+    res.send(todoList)
 })
 
 // 4 Delete a todo
